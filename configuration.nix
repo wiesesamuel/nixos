@@ -2,12 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.default
     ];
 
   # Bootloader.
@@ -18,10 +19,8 @@
   # Filesystems
   boot.supportedFilesystems = ["nfs"];
   
-  # programs
-  programs.ssh.startAgent = true;
-  programs.git.config.user.name = "wiesesamuel";
-  programs.git.config.user.email = "wiesesamuel@gmail.com";
+  # nix flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   networking.hostName = "vision"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -89,7 +88,10 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
+  
+  # =======================================================================================
+  # User Config
+  # ---------------------------------------------------------------------------------------
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vision = {
     isNormalUser = true;
@@ -97,8 +99,17 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
+      thunderbird
+      firefox
     ];
+  };
+  
+  home-manager = {
+    # also pass inputs to home-manager modules
+    extraSpecialArgs = {inherit inputs;};
+    users = {
+      "vision" = import ./home.nix;
+    };
   };
 
   # Enable automatic login for the user.
