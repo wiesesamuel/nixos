@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  #home.shellAliases = {
+  #  v-rebuild = "sudo nixos-rebuild switch --flake ~/.dots/nixos-config/#nixos";
+  #}  
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "vision";
