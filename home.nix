@@ -75,8 +75,8 @@
   programs.home-manager.enable = true;
   
   # programs
-  programs.ssh.startAgent = true;
-  programs.git.config.user.name = "wiesesamuel";
-  programs.git.config.user.email = "wiesesamuel@gmail.com";
+  # programs.ssh.startAgent = true;
+  # programs.git.config.user.name = "wiesesamuel";
+  # programs.git.config.user.email = "wiesesamuel@gmail.com";
 
 }
