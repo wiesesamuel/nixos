@@ -12,6 +12,10 @@
       inputs.home-manager.nixosModules.default
     ];
 
+  ################################################
+  # System Config
+  ################################################
+
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sdb";
@@ -32,9 +36,10 @@
     description = "vision";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
+      tree
       kdePackages.kate
-      thunderbird
-      firefox
+      # thunderbird
+      # firefox
       # texlive
       # spotify
       htop
@@ -45,7 +50,7 @@
     # also pass inputs to home-manager modules
     extraSpecialArgs = {inherit inputs;};
     users = {
-      "vision" = import ../../home/home.nix;
+      "vision" = import ../../home/desktop/default.nix;
     };
   };
 

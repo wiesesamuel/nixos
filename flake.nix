@@ -12,8 +12,10 @@
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
-    # use "nixos", or your hostname as the name of the configuration
-    # it's a better practice than "default" shown in the video
+    
+    ############################
+    # Default Machine: nixos
+    ############################
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
       modules = [
@@ -22,6 +24,9 @@
       ];
     };
 
+    ############################
+    # Home Server: tower
+    ############################
     nixosConfigurations.tower = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
       modules = [
