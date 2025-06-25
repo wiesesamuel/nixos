@@ -111,15 +111,18 @@ let
 
 
   # =======================================
-  # Intented strings and File System Paths skipped
-  # ---------------------------------------
-  # https://nix.dev/tutorials/nix-language#indented-strings
-
-  # =======================================
+  # Intented strings
+  # File System Paths
   # Lookup Paths
   # ---------------------------------------
-    task7 = _:
-    <nixpkgs/lib>;
+    task6 = _:
+    ''
+    ${toString /.} # root dir
+    ${toString ../.} # parent dir
+
+    ${<nixpkgs>}
+    ${<nixpkgs/lib>}
+    '';
 
   # =======================================
   #
@@ -130,7 +133,7 @@ let
     task2 =  _: task2 example;
     task3 =  _: task3 example;
     inherit task4 task5;
-    inherit task7;
+    inherit task6;
   };
 in
   if taskName == "all" then
